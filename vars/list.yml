@@ -1,0 +1,30 @@
+#replace all config 
+
+myip:
+  - 78.154.184.197
+
+oldip:
+  - 78.154.184.194
+
+#create folder for bacup config
+set_fact: mydate="{{lookup('pipe','date +%Y-%m-%d-%H-%M-%S')}}"
+debug: var=mydate
+
+#list folders
+bacup_config: "/home/core/bacup_config/"
+
+#list files
+file1: "/usr/local/etc/squid/squid.conf"
+file2: "/usr/local/etc/monitorix.conf"
+file3: "/etc/pf.conf"
+file4: "/var/db/mysql/my.cnf"
+file5: "/usr/local/etc/php-fpm.conf"
+file6: "/usr/local/etc/php-fpm.d"
+file7: "/usr/local/etc/php.ini"
+file8: "/usr/local/etc/php.conf"
+file9: "/usr/local/etc/php"
+file10: "/etc/rc.conf"
+file11: "/etc/crontab"
+file12: "/usr/local/etc/openvpn"
+file13: "/usr/local/etc/dovecot"
+

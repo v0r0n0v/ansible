@@ -1,0 +1,69 @@
+#create directory for bacup_config
+- name: create directory bacup_config
+  file:
+    path: "/home/core/bacup_config"
+    state: directory
+
+#variable date
+- set_fact: mydate="{{lookup('pipe','date +%Y-%m-%d-%H-%M-%S')}}"
+- debug: var=mydate
+
+#create subdirectory with date
+- name: create subdirectory with date
+  file:
+    path: "{{ bacup_config }}{{ mydate }}"
+    state: directory
+    #mode: "u=rw,g=wx,o=rwx"
+    #recurse: yes
+
+#creating multiple directories for configs
+- name: creating multiple directories for configs
+  file:
+    path: "{{ item }}"
+    state: directory
+  with_items:
+     - '{{ bacup_config }}{{ mydate }}/squid'
+     - '{{ bacup_config }}{{ mydate }}/monitorix'
+     - '{{ bacup_config }}{{ mydate }}/pf'
+     - '{{ bacup_config }}{{ mydate }}/nginx'
+     - '{{ bacup_config }}{{ mydate }}/php-fpm'
+     - '{{ bacup_config }}{{ mydate }}/mysql'
+     - '{{ bacup_config }}{{ mydate }}/general_folder'
+     - '{{ bacup_config }}{{ mydate }}/rc_conf'
+     - '{{ bacup_config }}{{ mydate }}/crontab'
+     - '{{ bacup_config }}{{ mydate }}/openvpn'
+     - '{{ bacup_config }}{{ mydate }}/dovecot'
+
+#copy config files
+- name: Your copy task
+  copy: src={{ item.src }} dest={{ item.dest }}
+  with_items:
+    - { src: '{{ file1 }}', dest: '{{ bacup_config }}{{ mydate }}/squid' }
+    - { src: '{{ file2 }}', dest: '{{ bacup_config }}{{ mydate }}/monitorix' }
+    - { src: '{{ file3 }}', dest: '{{ bacup_config }}{{ mydate }}/pf' }
+    - { src: '{{ file4 }}', dest: '{{ bacup_config }}{{ mydate }}/mysql' }
+    - { src: '{{ file5 }}', dest: '{{ bacup_config }}{{ mydate }}/php-fpm' }
+    - { src: '{{ file6 }}', dest: '{{ bacup_config }}{{ mydate }}/php-fpm' }
+    - { src: '{{ file7 }}', dest: '{{ bacup_config }}{{ mydate }}/php-fpm' }
+    - { src: '{{ file8 }}', dest: '{{ bacup_config }}{{ mydate }}/php-fpm' }
+    - { src: '{{ file9 }}', dest: '{{ bacup_config }}{{ mydate }}/php-fpm' }
+    - { src: '{{ file10 }}', dest: '{{ bacup_config }}{{ mydate }}/rc_conf' }
+    - { src: '{{ file11 }}', dest: '{{ bacup_config }}{{ mydate }}/crontab' }
+    - { src: '{{ file12 }}', dest: '{{ bacup_config }}{{ mydate }}/openvpn' }
+    - { src: '{{ file13 }}', dest: '{{ bacup_config }}{{ mydate }}/dovecot' }
+
+#archive /etc/ and /usr/local/etc and ansible and nginx
+- name: archive etc
+  archive: path=/etc dest={{ bacup_config }}{{ mydate }}/general_folder/etc.tar.gz
+
+- name: archive usr_local_etc
+  archive: path=/usr/local/etc dest={{ bacup_config }}{{ mydate }}/general_folder/usr_local_etc.tar.gz
+
+- name: archive ansible
+  archive: path=/home/core/ansible dest={{ bacup_config }}{{ mydate }}/general_folder/ansible.tar.gz
+
+- name: archive nginx
+  archive: path=/usr/local/etc/nginx dest={{ bacup_config }}{{ mydate }}/nginx/nginx.tar.gz
+
+- name: archive scripts
+  archive: path=/usr/local/scripts dest={{ bacup_config }}{{ mydate }}/general_folder/scripts.tar.gz

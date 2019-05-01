@@ -1,0 +1,98 @@
+# - stat:
+#     path: /home/core/folder/centos1
+#   register: sym
+
+# - stat:
+#     path: /home/core/folder/centos2
+#   register: sym2
+
+# #debug
+# #--------------------------------------------------
+# - debug:
+#     msg: "islnk isn't defined (path doesn't exist)"
+#   when: sym.stat.islnk is not defined
+
+# - debug:
+#     msg: "islnk is defined (path must exist)"
+#   when: sym.stat.islnk is defined
+
+# - debug:
+#     msg: "Path exists and is a symlink"
+#   when: sym.stat.islnk is defined and sym.stat.islnk
+
+# - debug:
+#     msg: "Path exists and isn't a symlink"
+#   when: sym.stat.islnk is defined and sym.stat.islnk == False
+
+# - debug:
+#     msg: "islnk isn't defined (path doesn't exist)"
+#   when: sym2.stat.islnk is not defined
+
+# - debug:
+#     msg: "islnk is defined (path must exist)"
+#   when: sym2.stat.islnk is defined
+
+# - debug:
+#     msg: "Path exists and is a symlink"
+#   when: sym2.stat.islnk is defined and sym.stat.islnk
+
+# - debug:
+#     msg: "Path exists and isn't a symlink"
+#   when: sym2.stat.islnk is defined and sym.stat.islnk == False
+
+# - name: copy project to remote location
+#   synchronize:
+#    src: "/tmp/1/"
+#    dest: "/tmp/2"
+
+# #debug
+# #--------------------------------------------------
+
+# - name: Get cksum of my First file
+#   stat:
+#     path : "/tmp/2/456"
+#   register: myfirstfile
+
+# - name: Current SHA1
+#   set_fact:
+#     mf1sha1: "{{ myfirstfile.stat.checksum }}"
+
+# - name: Get cksum of my Second File (If needed you can jump this)
+#   stat:
+#     path : "/tmp/2/456"
+#   register: mysecondfile
+
+# - name: Current SHA1
+#   set_fact:
+#     mf2sha1: "{{ mysecondfile.stat.checksum }}"
+
+# - name: Compilation Changed
+#   debug:
+#     msg: "File Compare"
+#   failed_when:  myfirstfile != mysecondfile
+
+- stat:
+    path: /tmp/1
+  register: p
+- debug:
+    msg: "Path exists and is a directory"
+  when: p.stat.isdir is defined and p.stat.isdir
+
+# Don't do checksum
+- stat:
+    path: /tmp/1
+    get_checksum: yes
+  register: stat_result
+
+
+# Use sha256 to calculate checksum
+- stat:
+    path: /tmp/2
+    get_checksum: yes
+    checksum_algorithm: sha256
+  register: stat_result2
+
+- name: Compilation Changed
+  debug:
+    msg: "File Compare"
+  failed_when:  stat_result = stat_result2

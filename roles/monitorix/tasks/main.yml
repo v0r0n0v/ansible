@@ -1,0 +1,11 @@
+#config for MONITORIX
+- name: replace string monitorix
+  replace:
+    path: "{{ file2 }}"
+    regexp: "{{ oldip|join(' ') }}"
+    replace: "{{ myip|join(' ') }}"
+
+- name: restart service monitorix
+  command: service monitorix restart
+
+

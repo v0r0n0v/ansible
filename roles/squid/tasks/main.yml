@@ -1,0 +1,9 @@
+#config for squid
+- name: replace string squid
+  replace:
+    path: "{{ file1 }}"
+    regexp: "{{ oldip|join(' ') }}"
+    replace: "{{ myip|join(' ') }}"
+
+- name: restart service squid
+  command: service squid restart

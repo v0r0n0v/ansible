@@ -1,0 +1,10 @@
+#config for PF
+- name: replace string pf
+  replace:
+    path: "{{ file3 }}"
+    regexp: "{{ oldip|join(' ') }}"
+    replace: "{{ myip|join(' ') }}"
+
+- name: restart service fireval 
+  command: pfctl -f /etc/pf.conf
+

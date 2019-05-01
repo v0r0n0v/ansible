@@ -1,0 +1,21 @@
+---
+- hosts: local
+  gather_facts: False
+  vars_files:
+    - vars/list.yml
+
+  roles:
+    - replace
+  tags: replace
+
+- hosts: local
+  gather_facts: False
+  vars_files:
+    - vars/list.yml
+
+  roles:
+    - squid
+    - monitorix
+    - pf
+    - nginx
+  tags: services
