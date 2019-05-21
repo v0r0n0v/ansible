@@ -1,0 +1,35 @@
+---
+- name: My Variables
+  hosts: local
+  become: yes
+
+  vars:
+    message1: Privet
+    message2: Word
+    secret  : OJGODJSPJGPSJDGDPL
+
+  tasks:
+
+  - name: Print Secret variable
+    debug:
+      var: secret
+
+  - debug:
+      msg: "Secretnoe slovo: {{ secret }}" 
+
+  - debug:
+      msg: "Vladelec Etogo Servera -->{{ ansible_user_gecos }}<--"
+
+  - set_fact: full_message="{{ message1 }} {{ message2 }} {{ ansible_user_gecos }} "
+
+  - debug:
+      var: full_message
+
+  - debug:
+      var: ansible_distribution
+
+  - shell: service php-fpm status
+    register: results
+
+  - debug:
+      var: results.stdout

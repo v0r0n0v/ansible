@@ -1,10 +1,11 @@
 #replace all config 
 
 myip:
-  - 78.154.184.197
+  - 78.154.184.202
 
 oldip:
-  - 78.154.184.194
+   - 78.154.165.151
+#  - 78.154.184.199
 
 #create folder for bacup config
 set_fact: mydate="{{lookup('pipe','date +%Y-%m-%d-%H-%M-%S')}}"
@@ -27,4 +28,4 @@ file10: "/etc/rc.conf"
 file11: "/etc/crontab"
 file12: "/usr/local/etc/openvpn"
 file13: "/usr/local/etc/dovecot"
-
+file14: "/usr/local/etc/nginx/allow_ip.conf"

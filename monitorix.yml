@@ -1,9 +1,0 @@
----
-- hosts: local
-  gather_facts: False
-  vars_files:
-    - vars/list.yml
-
-  roles:
-    - monitorix
-  tags: monitorix

@@ -1,3 +1,4 @@
+#DUMP CONFIG FILES SERVICES
 ---
 - hosts: local
   gather_facts: False
@@ -5,8 +6,5 @@
     - vars/list.yml
 
   roles:
-    - nginx
-  tags: nginx
-
-
-
+    - dump
+  tags: dump

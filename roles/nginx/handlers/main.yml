@@ -1,0 +1,3 @@
+---
+- name: restart service nginx
+  command: nginx -s reload

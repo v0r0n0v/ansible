@@ -4,8 +4,7 @@
     path: "{{ file2 }}"
     regexp: "{{ oldip|join(' ') }}"
     replace: "{{ myip|join(' ') }}"
+  notify: restart service monitorix
 
-- name: restart service monitorix
-  command: service monitorix restart
 
 

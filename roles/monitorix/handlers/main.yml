@@ -1,0 +1,3 @@
+---
+- name: restart service monitorix
+  command: service monitorix restart

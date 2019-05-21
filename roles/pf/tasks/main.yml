@@ -4,7 +4,6 @@
     path: "{{ file3 }}"
     regexp: "{{ oldip|join(' ') }}"
     replace: "{{ myip|join(' ') }}"
+  notify: restart service fireval 
 
-- name: restart service fireval 
-  command: pfctl -f /etc/pf.conf
 

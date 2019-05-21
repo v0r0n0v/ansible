@@ -1,9 +1,7 @@
 #config for nginx
 - name: replace string nginx
   replace:
-    path: "{{ file4 }}"
+    path: "{{ file14 }}"
     regexp: "{{ oldip|join(' ') }}"
     replace: "{{ myip|join(' ') }}"
-
-- name: restart service nginx
-  command: nginx -s reload
+  notify: restart service nginx

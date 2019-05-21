@@ -4,6 +4,5 @@
     path: "{{ file1 }}"
     regexp: "{{ oldip|join(' ') }}"
     replace: "{{ myip|join(' ') }}"
+  notify: restart service squid
 
-- name: restart service squid
-  command: service squid restart
